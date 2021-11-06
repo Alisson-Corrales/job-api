@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const jobSchema = new mongoose.Schema({
   company: {
     type: String,
@@ -15,7 +16,7 @@ const jobSchema = new mongoose.Schema({
     default: "pending",
   },
   createdBy: {
-      //
+      
   },
   timeStamp: {
       createdAt: true,
