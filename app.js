@@ -1,2 +1,5 @@
+const app = express();
+
 app
-.use
+.use('/api/v1/jobs', )
+.use('/api/v1/auth', authRouter)
