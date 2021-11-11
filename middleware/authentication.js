@@ -3,19 +3,19 @@ const {UnauthError} = require('../errors')
 
 
 const authenticationMiddleware = (req, res, next) => {
-    const authentHeader = req.header.authorization;
+    const authentHeader = req.headers.authorization;
 
     // if there's no authentication header or it starts with Bearer and nothing else, it'll show a error
-    if(!authentHeader || !authentHeader.startsWith("Bearer ")) {
-        throw new UnauthError("No token provided >:O")
+    if(!authentHeader || !authentHeader.startsWith("Bearer")) {
+        throw new UnauthError("Not authorized to be here >:O")
     }
 
-    const token = authentHeader.split(" ")[1];
+    const token = authentHeader.split(" ")[1]; //0 would be the bearer, 1 is the token
 
     try{
-        const decoded = jwt.verify(token, process.env.JWT_secret)
-        const {id, username} = decoded
-        req.user = {id, username}
+        const payload = jwt.verify(token, process.env.JWT_secret)
+        //const {userID, name} = payload
+        req.user = {userID: payload.userID, name: payload.name}
         next()
     } catch (err) {
         throw new UnauthError('Not authorized to access this route!')
